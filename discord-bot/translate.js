@@ -1,80 +1,57 @@
-// discord
-const Discord = require("discord.js")
-const client = new Discord.Client()
-const axios = require("axios")
-const dotenv = require("dotenv")
-const qs = require("querystring")
+//디스코드봇
+const discord = require("discord-bot.js")
+const client = new Dirscord.client()
+const axios = require('axios');
+const dotenv = requre("detenv")
+const qs = require('querystring');
+//환경변수 설정
+Dotenv.config()
 
-// 환경변수 설정
-dotenv.config()
-
-// default
-const baby = {
-    year: 0,
-    feed: 0,
-    chin: "",
-    image:
-        "https://purepng.com/public/uploads/medium/purepng.com-winnie-the-pooh-babywinnie-poohwinniepoohpooh-bearbearwinnie-the-poohteddy-bearcharacterbook-winnie-the-pooh-1926pooh-corner-1928winnie-pooh-and-piglet-1701528660495cibvs.png",
-}
-
-client.on("ready", () => {
-    console.log("I am ready!")
+//클라이언트 시작
+client.con("레디",()=> {
+    console.log("준비 됨")
 })
-
-feedBaby = () => {
-    baby.feed += 1
-    console.log("feed level up" + baby.feed)
-}
-
-fatFace = () => {
-    baby.chin += " "
-}
-
-oldBaby = () => {
-    baby.feed = 0
-    baby.year += 1
-    fatFace()
-    console.log("year is" + baby.year)
-}
-
-// 파파고 클래스
-
+//파파고 클래스
 const TRANSLATE_METHODS = {
-    nmt: "nmt",
-    smt: "smt",
-}
-
+    nmt: 'nmt',
+    smt: 'smt',
+};
 class Papago {
-    constructor(papagoConfig) {
-        this.papagoConfig = papagoConfig
+    constructor(config) {
+        this.config = config;
     }
 
     async lookup(term, { method }) {
-        if (this.papagoConfig == null) {
-            throw new Error("Papago instance should be initialized with papagoConfig first")
-        }
-        if (term == null) {
-            throw new Error("Search term should be provided as lookup arguments")
+        if (this.config == null) {
+            throw new Error('Papago instance should be initialized with config first');
+        } if (term == null) {
+            throw new Error('Search term should be provided as lookup arguments');
         }
 
-        const url = method === TRANSLATE_METHODS.smt ? "language/translate" : "papago/n2mt"
+        const url = method === TRANSLATE_METHODS.smt ?
+            'language/translate' : 'papago/n2mt';
+
         const params = qs.stringify({
-            source: "ko",
-            target: "ja",
+            source: 'ko',
+            target: 'en',
             text: term,
-        })
-        const papagoConfig = {
-            baseURL: "https://openapi.naver.com/v1/",
+        });
+
+        const papagoconfig = {
+            baseURL: 'https://openapi.naver.com/v1/',
             headers: {
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "x-naver-client-id": this.papagoConfig.NAVER_CLIENT_ID,
-                "x-naver-client-secret": this.papagoConfig.NAVER_CLIENT_SECRET,
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'x-naver-client-id': this.config.NAVER_CLIENT_ID,
+                'x-naver-client-secret': this.config.NAVER_CLIENT_SECRET,
             },
-        }
-        const response = await axios.post(url, params, papagoConfig)
-        return response.data.message.result.translatedText
+        };
+
+        const response = await axios.post(url, params, config);
+
+        return response.data.message.result.translatedText;
     }
 }
+//일본어 파파고 시작
 class JapanesPapago {
     constructor(papagoConfig) {
         this.papagoConfig = papagoConfig
@@ -106,8 +83,7 @@ class JapanesPapago {
         return response.data.message.result.translatedText
     }
 }
-
-// ------- 디스코드가 동작합니다 --------
+// 디스코드 동작(여기서부터 이해안감)
 client.on("message", (message) => {
     if (message.content.startsWith("! papa ")) {
         JAPANESWORD = message.content.replace("! papa ", "")
@@ -141,15 +117,13 @@ client.on("message", (message) => {
                 .setThumbnail(baby.image)
             message.channel.send(feedEmbed)
         }
-
+        
         main()
     }
-    // 등장하기
-    if (message.content == "! 상태") {
+     // 등장하기 
+     if (message.content == "! 상태") {
         const stateEmbed = new Discord.MessageEmbed()
-            .setColor("#ffc0cb")
-            .setTitle(`(${baby.chin}o^～^o${baby.chin}) 무럭무럭 자라 ${baby.year}kg이야!`)
-            .setImage(baby.image)
+
         message.channel.send(stateEmbed)
     }
     //밥먹기
@@ -212,48 +186,6 @@ client.on("message", (message) => {
     }
 })
 
-client.on("message", (message) => {
-    //날씨 가져오기
-    if (message.content.startsWith("! now ")) {
-        const city = message.content.replace("! now ", "")
-        getWeather = async (city) => {
-            const {
-                data: {
-                    main: { temp },
-                    weather,
-                    name,
-                },
-            } = await axios.get(
-                `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4fab0aa151dff647eb08468ce01ec59c&units=metric`
-            )
-            const embed = new Discord.MessageEmbed()
-                .setColor("#ffc0cb")
-                .setTitle(`${temp}˚, in ${name}`)
-                .setDescription(
-                    `It's ${weather[0].main} day! The weather is ${weather[0].description} now. (${baby.chin}o^～^o${baby.chin})`
-                )
-                .setThumbnail(
-                    "https://purepng.com/public/uploads/medium/purepng.com-weather-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596142xln6f.png"
-                )
-            message.channel.send(embed)
-        }
-        getWeather(city)
-    }
-    if (message.content === "임배드") {
-        const embed = new Discord.MessageEmbed()
-            .setColor("#ffc0cb")
-            .setTitle("제목")
-            .setDescription("설명")
-        message.channel.send(embed)
-    }
-    if (message.content === "앙기모찌") {
-        const embed = new Discord.MessageEmbed()
-            .setColor("#ffc0cb")
-            .setTitle("노션입니덩")
-            .setDescription("https://www.notion.so/1b138dfcbcc8481d94411d1368c2a5df")
-        message.channel.send(embed)
-    }
-})
 
 // 여러분의 디스코드 토큰으로 디스코드에 로그인합니다
 client.login(process.env.TOKEN)
