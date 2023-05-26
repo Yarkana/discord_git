@@ -1,8 +1,8 @@
 //디스코드봇
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Events, GatewayIntentBits } = require('discord.js'); //최신식으로 변경
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-const axios = require('axios');
-const dotenv = requre("detenv")
+const axios = require('axios');   //npm i axios로 설치할것
+const dotenv = require("detenv")   //npm i dotenv로 설치할 것
 const qs = require('querystring');
 //환경변수 설정
 Dotenv.config()
