@@ -1,5 +1,5 @@
 //디스코드봇
-const discord = require("discord-bot.js")
+const discord = require("discord.js")
 const client = new Dirscord.client()
 const axios = require('axios');
 const dotenv = requre("detenv")
