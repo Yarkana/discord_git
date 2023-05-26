@@ -24,41 +24,94 @@ const TRANSLATE_METHODS = {
     nmt: 'nmt',
     smt: 'smt',
 };
+
 class Papago {
-    constructor(config) {
-        this.config = config;
+    constructor(papagoConfig) {
+        this.papagoConfig = papagoConfig;
     }
 
     async lookup(term, { method }) {
-        if (this.config == null) {
+        if (this.papagoConfig == null) {
             throw new Error('Papago instance should be initialized with config first');
         } if (term == null) {
             throw new Error('Search term should be provided as lookup arguments');
         }
 
-        const url = method === TRANSLATE_METHODS.smt ?
-            'language/translate' : 'papago/n2mt';
+        const url = method === TRANSLATE_METHODS.smt ? 'language/translate' : 'papago/n2mt';
+		const params = qs.stringify({
+            source: 'ko',
+            target: 'en',
+            text: "임시텍스트",
+        });
+        const papagoConfig = {
+            baseURL: 'https://openapi.naver.com/v1/',
+            headers: {
+                'X-Naver-Client-Id': this.papagoConfig.NAVER_CLIENT_ID,
+                'X-Naver-Client-Secret': this.papagoConfig.NAVER_CLIENT_SECRET,
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            },
+        };
+    console.log(url, papagoConfig, params);
+
+        const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, this.papagoConfig);
+//'https://openapi.naver.com/v1/papago/n2mt'
+        return response.data.message.result.translatedText;
+    }
+}
+/*
+class Papago {
+    constructor(Id,SId) { //생성자
+        this.Id = Id;
+        this.SId = SId;
+    }
+
+    async lookup(term, { method }) {
+    
+        if (this.Id == null) {
+            throw new Error('Papago instance should be initialized with config first');
+        } if (term == null) {
+            throw new Error('Search term should be provided as lookup arguments');
+        }
+
+        //const url = method === TRANSLATE_METHODS.smt ?
+        //    'language/translate' : 'papago/n2mt';
 
         const params = qs.stringify({
             source: 'ko',
             target: 'en',
             text: term,
-        });
-
+        });	
+        
+        const url = method === TRANSLATE_METHODS.smt ?
+            'language/translate' : 'papago/n2mt';
+        
+		
         const papagoconfig = {
-            baseURL: 'https://openapi.naver.com/v1/',
+            baseURL: 'https://openapi.naver.com/v1/papago/n2mt',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'x-naver-client-id': this.config.NAVER_CLIENT_ID,
-                'x-naver-client-secret': this.config.NAVER_CLIENT_SECRET,
+                'x-naver-client-id': this.Id,
+                'x-naver-client-secret': this.SId,
+                
             },
         };
-
-        const response = await axios.post(url, params, config);
+      const papagoconfig = {
+         //   baseURL: 'https://openapi.naver.com/v1/',
+            headers: {
+                //'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'x-naver-client-id' : 'laYPCBAcDzdBKdLfu8DG',
+                'x-naver-client-secret': 'ifjCjEwcen'
+            },
+        };
+        
+    console.log(url, papagoconfig, params);
+    console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', papagoconfig, params); //이거 api통신 위해서 쓰는거
 
         return response.data.message.result.translatedText;
     }
 }
+*/
 //일본어 파파고 시작
 class JapanesPapago {
     constructor(papagoConfig) {
@@ -80,28 +133,28 @@ class JapanesPapago {
             text: term,
         })
         const papagoConfig = {
-            baseURL: "https://openapi.naver.com/v1/",
+            baseURL: "https://openapi.naver.com/v1/papago/n2mt",
             headers: {
                 "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                 "x-naver-client-id": this.papagoConfig.NAVER_CLIENT_ID,
                 "x-naver-client-secret": this.papagoConfig.NAVER_CLIENT_SECRET,
             },
         }
-        const response = await axios.post(url, params, papagoConfig)
+        const response = await axios.post(url, params, this.papagoConfig)
         return response.data.message.result.translatedText
     }
 }
-// 디스코드 동작(여기서부터 이해안감)
+// 디스코드 동작                 client.on은 봇이 작동하는 동안 이루어질 코드들
 client.on("messageCreate", async message => {   //"messageCreate" - 모든 채팅에 반응함, async(자료형) message(변수이름) =>(아마 흐름연산 중에 하나임)
     if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
         JAPANESWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
         async function main() {
             const papago = new JapanesPapago({
-                NAVER_CLIENT_ID: process.env.client_id,
-                NAVER_CLIENT_SECRET: process.env.client_secret,
+                NAVER_CLIENT_ID: process.env.client_id,            //env파일은 비주얼 스투디오 코드로 생성해서 변수이름 = 토큰 식으로 작성함
+                NAVER_CLIENT_SECRET: process.env.client_secret,    //예시 : ID = EEEE
             })
             const nmtResult = await papago.lookup(JAPANESWORD, { method: "nmt" })
-            const feedEmbed = new Discord.MessageEmbed()
+            const feedEmbed = new discord.MessageEmbed()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${JAPANESWORD}]の韓国語ですー！`)
@@ -117,7 +170,7 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
                 NAVER_CLIENT_SECRET: process.env.client_secret,
             })
             const nmtResult = await papago.lookup(KOREANWORD, { method: "nmt" })
-            const feedEmbed = new Discord.MessageEmbed()
+            const feedEmbed = new discord.MessageEmbed()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${KOREANWORD}]에 대한 번역입니다.`)
