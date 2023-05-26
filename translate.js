@@ -1,5 +1,6 @@
 //디스코드봇
 const { Client, Events, GatewayIntentBits } = require('discord.js'); //최신식으로 변경
+const discord = require("discord.js");
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -104,8 +105,6 @@ client.on("messageCreate", async message => {
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${JAPANESWORD}]の韓国語ですー！`)
-                .setThumbnail(baby.image)
-            message.channel.send(feedEmbed)
         }
         main()
     }
@@ -122,75 +121,9 @@ client.on("messageCreate", async message => {
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${KOREANWORD}]에 대한 번역입니다.`)
-                .setThumbnail(baby.image)
-            message.channel.send(feedEmbed)
         }
         
         main()
-    }
-     // 등장하기 
-     if (message.content == "!상태") {
-        const stateEmbed = new Discord.MessageEmbed()
-
-        message.channel.send(stateEmbed)
-    }
-    //밥먹기
-    if (
-        (message.content == "! 밥") |
-        (message.content == "! 밥묵자") |
-        (message.content == "! 먹어") |
-        (message.content == "! 먹이")
-    ) {
-        if (baby.feed > 1) {
-            oldBaby()
-            EMBEDTEXT = `(´З｀${baby.chin}) 너무 만차나...`
-        } else if (baby.feed == 1) {
-            feedBaby()
-            EMBEDTEXT = `ε=(∀-*${baby.chin}) 꺼억`
-        } else if (baby.feed == 0) {
-            feedBaby()
-            EMBEDTEXT = `((${baby.chin}￣～￣${baby.chin})) 초묵초묵`
-        }
-        const feedEmbed = new Discord.MessageEmbed()
-            .setColor("#ffc0cb")
-            .setTitle(EMBEDTEXT)
-            .setThumbnail(baby.image)
-            .setDescription(`LV.${baby.year}`)
-            .setThumbnail(baby.image)
-        message.channel.send(feedEmbed)
-    }
-    // 일어 등장하기
-    if (message.content == "! 様子") {
-        const stateEmbed = new Discord.MessageEmbed()
-            .setColor("#ffc0cb")
-            .setTitle(`(${baby.chin}o^～^o${baby.chin}) もはや ${baby.year}kgになりました!`)
-        message.channel.send(stateEmbed)
-    }
-    //일어 밥먹기
-    if (
-        (message.content == "! ご飯") |
-        (message.content == "! ごはん") |
-        (message.content == "！　ご飯") |
-        (message.content == "！　ごはん") |
-        (message.content == "！ご飯") |
-        (message.content == "！ごはん")
-    ) {
-        if (baby.feed > 1) {
-            oldBaby()
-            EMBEDTEXT = `(´З｀${baby.chin}) もうこれ以上は無理...`
-        } else if (baby.feed == 1) {
-            feedBaby()
-            EMBEDTEXT = `ε=(∀-*${baby.chin}) ゲプッ`
-        } else if (baby.feed == 0) {
-            feedBaby()
-            EMBEDTEXT = `((${baby.chin}￣～￣${baby.chin})) ﾓｸﾞﾓｸﾞ`
-        }
-        const feedEmbed = new Discord.MessageEmbed()
-            .setColor("#ffc0cb")
-            .setTitle(EMBEDTEXT)
-            .setDescription(`LV.${baby.year}`)
-            .setThumbnail(baby.image)
-        message.channel.send(feedEmbed)
     }
 })
 
