@@ -1,6 +1,6 @@
 //디스코드봇
-const discord = require("discord.js")
-const client = new Dirscord.client()
+const { Client, Events, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const axios = require('axios');
 const dotenv = requre("detenv")
 const qs = require('querystring');
