@@ -10,7 +10,7 @@ const client = new Client({
 });
 const axios = require('axios');   //npm i axios로 설치할것
 const dotenv = require("dotenv")   //npm i dotenv로 설치할 것
-const qs = require('querystring');
+const qs = require('querystring');  //설치안해도 작동했음. 필요시 설치
 //환경변수 설정
 dotenv.config()
 
