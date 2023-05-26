@@ -95,6 +95,7 @@ class JapanesPapago {
 client.on("messageCreate", async message => {   //"messageCreate" - 모든 채팅에 반응함, async(자료형) message(변수이름) =>(아마 흐름연산 중에 하나임)
     if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
         JAPANESWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
+        async function main() {
             const papago = new JapanesPapago({
                 NAVER_CLIENT_ID: process.env.client_id,
                 NAVER_CLIENT_SECRET: process.env.client_secret,
@@ -106,6 +107,7 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
                 .setDescription(`[${JAPANESWORD}]の韓国語ですー！`)
         }
         main()
+       }
     if (message.content.startsWith("!파파고")) {                 //startWith 즉 이 문장으로 시작하는가 라는 조건임
         KOREANWORD = message.content.replace("!파파고", "")
 		await message.reply("이 코드는 작동햇어요");
