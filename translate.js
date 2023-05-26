@@ -1,6 +1,13 @@
 //디스코드봇
 const { Client, Events, GatewayIntentBits } = require('discord.js'); //최신식으로 변경
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+	],
+});
 const axios = require('axios');   //npm i axios로 설치할것
 const dotenv = require("dotenv")   //npm i dotenv로 설치할 것
 const qs = require('querystring');
@@ -85,8 +92,8 @@ class JapanesPapago {
 }
 // 디스코드 동작(여기서부터 이해안감)
 client.on("messageCreate", async message => {
-    if (message.content.startsWith("! papa ")) {
-        JAPANESWORD = message.content.replace("! papa ", "")
+    if (message.content.startsWith("!papa")) {
+        JAPANESWORD = message.content.replace("!papa", "")
         async function main() {
             const papago = new JapanesPapago({
                 NAVER_CLIENT_ID: process.env.client_id,
@@ -102,8 +109,9 @@ client.on("messageCreate", async message => {
         }
         main()
     }
-    if (message.content.startsWith("! 파파고 ")) {
-        KOREANWORD = message.content.replace("! 파파고 ", "")
+    if (message.content.startsWith("!파파고")) {
+        KOREANWORD = message.content.replace("!파파고", "")
+		await message.reply("이 코드는 작동햇어요");
         async function main() {
             const papago = new Papago({
                 NAVER_CLIENT_ID: "ipJ5Vxrkks6XwgINV5Pb",
@@ -121,7 +129,7 @@ client.on("messageCreate", async message => {
         main()
     }
      // 등장하기 
-     if (message.content == "! 상태") {
+     if (message.content == "!상태") {
         const stateEmbed = new Discord.MessageEmbed()
 
         message.channel.send(stateEmbed)

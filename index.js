@@ -58,7 +58,9 @@ client.on(Events.InteractionCreate, async interaction => {
 */
 client.on("messageCreate", async TmessageCreate => {
     console.log(`a message was created`);
+    if (TmessageCreate.content == "말해") {
 	await TmessageCreate.reply("대답");
+    }
 //    console.log({message});
 });
 
