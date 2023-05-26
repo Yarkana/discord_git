@@ -8,8 +8,8 @@ const qs = require('querystring');
 dotenv.config()
 
 //클라이언트 시작
-client.once("레디",()=> {
-    console.log("준비 됨")
+client.once(Events.ClientReady,()=> {
+    console.log("준비 됨");
 })
 //파파고 클래스
 const TRANSLATE_METHODS = {
@@ -84,7 +84,7 @@ class JapanesPapago {
     }
 }
 // 디스코드 동작(여기서부터 이해안감)
-client.on("message", (message) => {
+client.on("messageCreate", async message => {
     if (message.content.startsWith("! papa ")) {
         JAPANESWORD = message.content.replace("! papa ", "")
         async function main() {
