@@ -2,9 +2,18 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+//const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+	],
+});
 
-client.commands = new Collection();
+
+//client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -47,23 +56,10 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 */
-client.on('message', msg => {
-  switch (msg.content) {
-    case "ping":
-      msg.reply("Pong!");
-      break;
-    case "!eye":
-      msg.channel.send("You are now subscribed to eye reminders.");
-       interval = setInterval (function () {
-        msg.channel.send("Please take an eye break now!")
-        .catch(console.error); 
-      }, 3600000); //every hour
-      break;
-    case "!stop":
-      msg.channel.send("I have stopped eye reminders.");
-      clearInterval(interval);
-      break;
-  }
+client.on("messageCreate", async TmessageCreate => {
+    console.log(`a message was created`);
+	await TmessageCreate.reply("대답");
+//    console.log({message});
 });
 
 //must be last line
