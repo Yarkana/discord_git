@@ -113,8 +113,8 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
 		await message.reply("이 코드는 작동햇어요");
         async function main() {
             const papago = new Papago({
-                NAVER_CLIENT_ID: "ipJ5Vxrkks6XwgINV5Pb",
-                NAVER_CLIENT_SECRET: "pV2sEzjZlI",
+                NAVER_CLIENT_ID: process.env.client_id,
+                NAVER_CLIENT_SECRET: process.env.client_secret,
             })
             const nmtResult = await papago.lookup(KOREANWORD, { method: "nmt" })
             const feedEmbed = new Discord.MessageEmbed()
