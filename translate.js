@@ -8,7 +8,7 @@ const qs = require('querystring');
 dotenv.config()
 
 //클라이언트 시작
-client.con("레디",()=> {
+client.once("레디",()=> {
     console.log("준비 됨")
 })
 //파파고 클래스
