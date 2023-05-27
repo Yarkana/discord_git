@@ -1,6 +1,6 @@
 //디스코드봇
 const { Client, Events, GatewayIntentBits } = require('discord.js'); //최신식으로 변경
-const discord = require("discord.js");
+const { EmbedBuilder } = require('discord.js');
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -12,6 +12,7 @@ const client = new Client({
 const axios = require('axios');   //npm i axios로 설치할것
 const dotenv = require("dotenv")   //npm i dotenv로 설치할 것
 const qs = require('querystring');  //설치안해도 작동했음. 필요시 설치
+ var request = require('request');
 //환경변수 설정
 dotenv.config()
 
@@ -46,14 +47,30 @@ class Papago {
         const papagoConfig = {
        //     baseURL: 'https://openapi.naver.com/v1/',
             headers: {
-                'X-Naver-Client-Id': this.papagoConfig.NAVER_CLIENT_ID,
-                'X-Naver-Client-Secret': this.papagoConfig.NAVER_CLIENT_SECRET,
+                'X-Naver-Client-Id':this.papagoConfig.NAVER_CLIENT_ID,
+                'X-Naver-Client-Secret':this.papagoConfig.NAVER_CLIENT_SECRET,
             },
         };
+        
+        var options = {
+       url: 'https://openapi.naver.com/v1/papago/n2mt',
+       form: {'source':'ko', 'target':'en', 'text':term},
+       headers: {'X-Naver-Client-Id':this.papagoConfig.NAVER_CLIENT_ID, 'X-Naver-Client-Secret': this.papagoConfig.NAVER_CLIENT_SECRET}
+    };
+    
     console.log(url, params, papagoConfig);
-
-        const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, this.papagoConfig);
+/*
+     const response = request.post(options, function (error, response, body) {
+     if (!error && response.statusCode == 200) {
+       res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+       res.end(body);
+     } else {
+       res.status(response.statusCode).end();
+       console.log('error = ' + response.statusCode);
+     }});
+     */
 //'https://openapi.naver.com/v1/papago/n2mt'
+	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
         return response.data.message.result.translatedText;
     }
 }
@@ -165,39 +182,16 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
         KOREANWORD = message.content.replace("!파파고", "")
 		await message.reply("이 코드는 작동햇어요");
         async function main() {
-	/*
-	var express = require('express');
-var app = express();
-var client_id = process.env.client_id;
-var client_secret = process.env.client_secret;
-var query = "번역할 문장을 입력하세요.";
-app.get('/translate', function (req, res) {
-   var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
-   var request = require('request');
-   var options = {
-       url: api_url,
-       form: {'source':'ko', 'target':'en', 'text':query},
-       headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-    };
-    console.log(options);
-   request.post(options, function (error, response, body) {
-   });
- });
- app.listen(3000, function () {
-   console.log('http://127.0.0.1:3000/translate app listening on port 3000!');
- });
- */
-	
             const papago = new Papago({
                 NAVER_CLIENT_ID: process.env.client_id,
                 NAVER_CLIENT_SECRET: process.env.client_secret,
             })
             const nmtResult = await papago.lookup(KOREANWORD, { method: "nmt" })
-            const feedEmbed = new discord.MessageEmbed()
+            const feedEmbed = new EmbedBuilder()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${KOREANWORD}]에 대한 번역입니다.`)
-                
+            message.channel.send({ embeds: [feedEmbed] })
         }
         
         main()
