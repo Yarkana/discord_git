@@ -59,76 +59,12 @@ class Papago {
     };
     
     console.log(url, params, papagoConfig);
-/*
-     const response = request.post(options, function (error, response, body) {
-     if (!error && response.statusCode == 200) {
-       res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
-       res.end(body);
-     } else {
-       res.status(response.statusCode).end();
-       console.log('error = ' + response.statusCode);
-     }});
-     */
+
 //'https://openapi.naver.com/v1/papago/n2mt'
 	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
         return response.data.message.result.translatedText;
     }
 }
-
-/*
-class Papago {
-    constructor(Id,SId) { //생성자
-        this.Id = Id;
-        this.SId = SId;
-    }
-
-    async lookup(term, { method }) {
-    
-        if (this.Id == null) {
-            throw new Error('Papago instance should be initialized with config first');
-        } if (term == null) {
-            throw new Error('Search term should be provided as lookup arguments');
-        }
-
-        //const url = method === TRANSLATE_METHODS.smt ?
-        //    'language/translate' : 'papago/n2mt';
-
-        const params = qs.stringify({
-            source: 'ko',
-            target: 'en',
-            text: term,
-        });	
-        
-        const url = method === TRANSLATE_METHODS.smt ?
-            'language/translate' : 'papago/n2mt';
-        
-		
-        const papagoconfig = {
-            baseURL: 'https://openapi.naver.com/v1/papago/n2mt',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'x-naver-client-id': this.Id,
-                'x-naver-client-secret': this.SId,
-                
-            },
-        };
-      const papagoconfig = {
-         //   baseURL: 'https://openapi.naver.com/v1/',
-            headers: {
-                //'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'x-naver-client-id' : 'laYPCBAcDzdBKdLfu8DG',
-                'x-naver-client-secret': 'ifjCjEwcen'
-            },
-        };
-        
-    console.log(url, params, papagoconfig);
-    console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', papagoconfig, params); //이거 api통신 위해서 쓰는거
-
-        return response.data.message.result.translatedText;
-    }
-}
-*/
 //일본어 파파고 시작
 class JapanesPapago {
     constructor(papagoConfig) {
