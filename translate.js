@@ -85,14 +85,14 @@ class JapanesPapago {
         };
 
 	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
-	console.log(response.data.message.result.translatedText);
+	
         return response.data.message.result.translatedText;
     }
 }
 // 디스코드 동작                 client.on은 봇이 작동하는 동안 이루어질 코드들
 client.on("messageCreate", async message => {   //"messageCreate" - 모든 채팅에 반응함, async(자료형) message(변수이름) =>(아마 흐름연산 중에 하나임)
     if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
-        JAPANESWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
+        ENWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
         async function main() {
             const papago = new JapanesPapago({
                 NAVER_CLIENT_ID: process.env.client_id,            //env파일은 비주얼 스투디오 코드로 생성해서 변수이름 = 토큰 식으로 작성함
