@@ -98,11 +98,11 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
                 NAVER_CLIENT_ID: process.env.client_id,            //env파일은 비주얼 스투디오 코드로 생성해서 변수이름 = 토큰 식으로 작성함
                 NAVER_CLIENT_SECRET: process.env.client_secret,    //예시 : ID = EEEE
             })
-            const nmtResult = await papago.lookup(JAPANESWORD, { method: "nmt" })
+            const nmtResult = await papago.lookup(ENWORD, { method: "nmt" })
             const Embed = new EmbedBuilder()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
-                .setDescription(`[${JAPANESWORD}]の韓国語ですー！`)
+                .setDescription(`[${ENWORD}]에 대한 영어번역입니다`)
             message.channel.send({ embeds: [Embed] })
         }
         main()
@@ -118,7 +118,7 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
             const Embed = new EmbedBuilder()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
-                .setDescription(`[${KOREANWORD}]에 대한 번역입니다.`)
+                .setDescription(`[${KOREANWORD}]에 대한 한글번역입니다.`)
             message.channel.send({ embeds: [Embed] })
         }
         
