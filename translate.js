@@ -42,59 +42,51 @@ class Papago {
 		const params = qs.stringify({
             source: 'ko',
             target: 'en',
-            text: "임시텍스트",
+            text: term,
         });
         const papagoConfig = {
-       //     baseURL: 'https://openapi.naver.com/v1/',
             headers: {
+                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                 'X-Naver-Client-Id':this.papagoConfig.NAVER_CLIENT_ID,
                 'X-Naver-Client-Secret':this.papagoConfig.NAVER_CLIENT_SECRET,
             },
         };
-        
-        var options = {
-       url: 'https://openapi.naver.com/v1/papago/n2mt',
-       form: {'source':'ko', 'target':'en', 'text':term},
-       headers: {'X-Naver-Client-Id':this.papagoConfig.NAVER_CLIENT_ID, 'X-Naver-Client-Secret': this.papagoConfig.NAVER_CLIENT_SECRET}
-    };
-    
-    console.log(url, params, papagoConfig);
 
-//'https://openapi.naver.com/v1/papago/n2mt'
 	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
+	console.log(response.data.message.result.translatedText);
         return response.data.message.result.translatedText;
     }
 }
-//일본어 파파고 시작
+//영어 파파고 시작
 class JapanesPapago {
     constructor(papagoConfig) {
-        this.papagoConfig = papagoConfig
+        this.papagoConfig = papagoConfig;
     }
 
     async lookup(term, { method }) {
         if (this.papagoConfig == null) {
-            throw new Error("Papago instance should be initialized with papagoConfig first")
-        }
-        if (term == null) {
-            throw new Error("Search term should be provided as lookup arguments")
+            throw new Error('Papago instance should be initialized with config first');
+        } if (term == null) {
+            throw new Error('Search term should be provided as lookup arguments');
         }
 
-        const url = method === TRANSLATE_METHODS.smt ? "language/translate" : "papago/n2mt"
-        const params = qs.stringify({
-            source: "ja",
-            target: "ko",
+        const url = method === TRANSLATE_METHODS.smt ? 'language/translate' : 'papago/n2mt';
+		const params = qs.stringify({
+            source: 'en',
+            target: 'ko',
             text: term,
-        })
+        });
         const papagoConfig = {
-            baseURL: "https://openapi.naver.com/v1/papago/n2mt",
             headers: {
                 "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "x-naver-client-id": this.papagoConfig.NAVER_CLIENT_ID,
-                "x-naver-client-secret": this.papagoConfig.NAVER_CLIENT_SECRET,
+                'X-Naver-Client-Id':this.papagoConfig.NAVER_CLIENT_ID,
+                'X-Naver-Client-Secret':this.papagoConfig.NAVER_CLIENT_SECRET,
             },
-        }
-        const response = await axios.post(url, params, this.papagoConfig)
-        return response.data.message.result.translatedText
+        };
+
+	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
+	console.log(response.data.message.result.translatedText);
+        return response.data.message.result.translatedText;
     }
 }
 // 디스코드 동작                 client.on은 봇이 작동하는 동안 이루어질 코드들
@@ -107,27 +99,27 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
                 NAVER_CLIENT_SECRET: process.env.client_secret,    //예시 : ID = EEEE
             })
             const nmtResult = await papago.lookup(JAPANESWORD, { method: "nmt" })
-            const feedEmbed = new discord.MessageEmbed()
+            const Embed = new discord.MessageEmbed()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${JAPANESWORD}]の韓国語ですー！`)
+            message.channel.send({ embeds: [Embed] })
         }
         main()
        }
     if (message.content.startsWith("!파파고")) {                 //startWith 즉 이 문장으로 시작하는가 라는 조건임
         KOREANWORD = message.content.replace("!파파고", "")
-		await message.reply("이 코드는 작동햇어요");
         async function main() {
             const papago = new Papago({
                 NAVER_CLIENT_ID: process.env.client_id,
                 NAVER_CLIENT_SECRET: process.env.client_secret,
             })
             const nmtResult = await papago.lookup(KOREANWORD, { method: "nmt" })
-            const feedEmbed = new EmbedBuilder()
+            const Embed = new EmbedBuilder()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${KOREANWORD}]에 대한 번역입니다.`)
-            message.channel.send({ embeds: [feedEmbed] })
+            message.channel.send({ embeds: [Embed] })
         }
         
         main()
@@ -135,5 +127,5 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
 })
 
 
-// 여러분의 디스코드 토큰으로 디스코드에 로그인합니다
+// 토큰
 client.login(process.env.TOKEN)
