@@ -44,20 +44,20 @@ class Papago {
             text: "임시텍스트",
         });
         const papagoConfig = {
-            baseURL: 'https://openapi.naver.com/v1/',
+       //     baseURL: 'https://openapi.naver.com/v1/',
             headers: {
                 'X-Naver-Client-Id': this.papagoConfig.NAVER_CLIENT_ID,
                 'X-Naver-Client-Secret': this.papagoConfig.NAVER_CLIENT_SECRET,
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             },
         };
-    console.log(url, papagoConfig, params);
+    console.log(url, params, papagoConfig);
 
         const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, this.papagoConfig);
 //'https://openapi.naver.com/v1/papago/n2mt'
         return response.data.message.result.translatedText;
     }
 }
+
 /*
 class Papago {
     constructor(Id,SId) { //생성자
@@ -104,7 +104,7 @@ class Papago {
             },
         };
         
-    console.log(url, papagoconfig, params);
+    console.log(url, params, papagoconfig);
     console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n");
         const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', papagoconfig, params); //이거 api통신 위해서 쓰는거
 
@@ -165,6 +165,29 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
         KOREANWORD = message.content.replace("!파파고", "")
 		await message.reply("이 코드는 작동햇어요");
         async function main() {
+	/*
+	var express = require('express');
+var app = express();
+var client_id = process.env.client_id;
+var client_secret = process.env.client_secret;
+var query = "번역할 문장을 입력하세요.";
+app.get('/translate', function (req, res) {
+   var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
+   var request = require('request');
+   var options = {
+       url: api_url,
+       form: {'source':'ko', 'target':'en', 'text':query},
+       headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+    };
+    console.log(options);
+   request.post(options, function (error, response, body) {
+   });
+ });
+ app.listen(3000, function () {
+   console.log('http://127.0.0.1:3000/translate app listening on port 3000!');
+ });
+ */
+	
             const papago = new Papago({
                 NAVER_CLIENT_ID: process.env.client_id,
                 NAVER_CLIENT_SECRET: process.env.client_secret,
@@ -174,6 +197,7 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${KOREANWORD}]에 대한 번역입니다.`)
+                
         }
         
         main()
