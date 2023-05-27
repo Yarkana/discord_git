@@ -19,9 +19,9 @@ client.con('message',msg => {
     .setDescription("안녕하세요 두두 봇입니다.") // 설명하는 부분, Thumbnail 은 작은 부분
     .setThumbnail("https://blog.kakaocdn.net/dn/JCUxA/btqyzvTvIjU/JFStpmCpt4dn8zCQ6vVCx0/img.jpg")
     .addFields(
-      {name: "학교 위치", value: "경상북도 경산시 진량읍 대구대로 201(내리리)",inline: true} // 이름과 벨륨값을 정해주는 틀 
-      {name: "개교일자", value: "1956년 5월 1일(67주년)",inline: true}
-      {name: "교훈", value: "큰 뜻을 품어라",inline: true}
+      {name: "학교 위치", value: "경상북도 경산시 진량읍 대구대로 201(내리리)",inline: true}, // 이름과 벨륨값을 정해주는 틀 
+      {name: "개교일자", value: "1956년 5월 1일(67주년)",inline: true},
+      {name: "교훈", value: "큰 뜻을 품어라",inline: true},
       {name: "건학정신", value: "사랑 빛 자유",inline: true}
     )
     
