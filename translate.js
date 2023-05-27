@@ -99,7 +99,7 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
                 NAVER_CLIENT_SECRET: process.env.client_secret,    //예시 : ID = EEEE
             })
             const nmtResult = await papago.lookup(JAPANESWORD, { method: "nmt" })
-            const Embed = new discord.MessageEmbed()
+            const Embed = new EmbedBuilder()
                 .setColor("#ffc0cb")
                 .setTitle(nmtResult)
                 .setDescription(`[${JAPANESWORD}]の韓国語ですー！`)
