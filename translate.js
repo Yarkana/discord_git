@@ -13,6 +13,15 @@ const axios = require('axios');   //npm i axios로 설치할것
 const dotenv = require("dotenv")   //npm i dotenv로 설치할 것
 const qs = require('querystring');  //설치안해도 작동했음. 필요시 설치
  var request = require('request');
+ 
+ //변수선언
+const langset = {
+	sourceL: '',
+	targetL: ''
+} 
+
+
+
 //환경변수 설정
 dotenv.config()
 
@@ -89,6 +98,7 @@ class JapanesPapago {
         return response.data.message.result.translatedText;
     }
 }
+
 // 디스코드 동작                 client.on은 봇이 작동하는 동안 이루어질 코드들
 client.on("messageCreate", async message => {   //"messageCreate" - 모든 채팅에 반응함, async(자료형) message(변수이름) =>(아마 흐름연산 중에 하나임)
     if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
@@ -124,6 +134,14 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
         
         main()
     }
+    if (message.content.startsWith("!타겟언어")) {
+        LSET = message.content.replace("!타겟언어", "") //1번째인수에 지정된 단어를 넘겨주면 2번째인수의 단어로 교체함 즉 명령어를 제거함
+        async function main() {
+			langset.targetL = LSET
+	}
+	main()	
+	
+	}
 })
 
 
