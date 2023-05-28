@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
-	data: new SlashCommandBuilder()
+	data: new SlashCommandBuilder() //이곳에서 명령을 실행함!
 		.setName('언어변경')
 		.setDescription('번역할 언어를 바꿉니다.'),
 	async execute(interaction) {

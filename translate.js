@@ -122,7 +122,7 @@ class JapanesPapago {
     }
 }
 
-// 디스코드 메세지 동작                client.on은 봇이 작동하는 동안 이루어질 코드들
+// 디스코드 메세지 동작                client.on은 봇이 작동하는 동안 이루어질 코드들   asynd 함수들을 쓰기 위해선 async를 미리 선언할 필요가 있음!
 client.on("messageCreate", async message => {   //"messageCreate" - 모든 채팅에 반응함, async(자료형) message(변수이름) =>(아마 흐름연산 중에 하나임)
     if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
         ENWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
@@ -178,7 +178,7 @@ client.on(Events.InteractionCreate, async interaction => { //슬래쉬 명령어
 	}
 	//자바의 예외처리
 	try {  	
-		await command.execute(interaction);
+		await command.execute(interaction);    //서버에 응답을 반환합니다.
 	} catch (error) {  //아무 에러나 다 잡습니다.
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
