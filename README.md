@@ -11,5 +11,6 @@ https://gist.github.com/c081f171f0227fa9f8a86d590dc30e7f.git
 ## 참고한 문서
 디스코드의 이벤트들을 모아놓은 문서
 https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
+
 최초 실행 가이드
 https://discordjs.guide/creating-your-bot/event-handling.html#resulting-code
