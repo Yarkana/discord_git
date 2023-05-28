@@ -2,6 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 //디스코드봇
+const { Collection } = require('discord.js');
 const { Client, Events, GatewayIntentBits } = require('discord.js'); //최신식으로 변경
 const { EmbedBuilder } = require('discord.js');
 const client = new Client({
@@ -166,7 +167,7 @@ client.on("messageCreate", async message => {   //"messageCreate" - 모든 채�
 	}
 })
 //슬래쉬 커맨드용 디스코드 작동 코드
-client.on(Events.InteractionCreate, interaction => { //슬래쉬 명령어에 한해 작동합니다!
+client.on(Events.InteractionCreate, async interaction => { //슬래쉬 명령어에 한해 작동합니다!
 	if (!interaction.isChatInputCommand()) return; //슬래쉬 명령 이외의 입력이 들어올 경우 해당코드는 작동하지 않습니다. *응용하면 봇채팅은 거르면서 상시 번역은 가능하게?
 	const command = interaction.client.commands.get(interaction.commandName);
 	console.log(interaction);
@@ -176,7 +177,7 @@ client.on(Events.InteractionCreate, interaction => { //슬래쉬 명령어에 �
 		return;
 	}
 	//자바의 예외처리
-	try {  
+	try {  	
 		await command.execute(interaction);
 	} catch (error) {  //아무 에러나 다 잡습니다.
 		console.error(error);
