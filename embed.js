@@ -1,17 +1,28 @@
-const discord = require('discord.js');
-const client = new discord.Client();
+const { Client, Events, GatewayIntentBits } = require('discord.js');
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+	],
+});
+const dotenv = require('dotenv')
+const { EmbedBuilder } = require('discord.js'); 
 
-client.con('ready',()=> {
-  console.log('Logged in as ${client.user.tag}!'); //client.user.tag 부분 색깔이 다름 원래 값을 받아오는 것 수정
+dotenv.config()
+
+client.once('ClientReady',()=> {
+  console.log('Logged in as !'); //client.user.tag 부분 색깔이 다름 원래 값을 받아오는 것 수정
 });
 
-client.con('message',msg => {
+client.on('MessageCreate',msg => {
   if (msg.content == '야') {
     msg.reply('호!');
   }
 
   if (msg.content == "프로필") {
-    const embed = new discord.MessageEmbed() // 임배드 디스코드 대답
+    const embed = new EmbedBuilder() // 임배드 디스코드 대답
     .setAuthor("두두 봇","https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.daegu.ac.kr%2Farticle%2FDG56%2Fdetail%2F516278&psig=AOvVaw1z490kWF08uWED777u4er1&ust=1685287867967000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOCG8tjolf8CFQAAAAAdAAAAABAE")
     .setTitle("두두 봇 프로필") // Author은 제목, 이미지 주소 Title은 큰 제목격 
     .setURL("https://www.daegu.ac.kr/main") // url 주소 클릭하면 이동됨
@@ -28,3 +39,6 @@ client.con('message',msg => {
     msg.channel.send(embed);
   }
 })
+
+// 토큰
+client.login(process.env.TOKEN)
