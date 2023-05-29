@@ -40,5 +40,4 @@ client.on('MessageCreate',msg => {
   }
 })
 
-// 토큰
 client.login(process.env.TOKEN)
