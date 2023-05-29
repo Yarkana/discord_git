@@ -13,7 +13,7 @@ const { EmbedBuilder } = require('discord.js');
 dotenv.config()
 
 client.once('ClientReady',()=> {
-  console.log('Logged in as !'); //client.user.tag 부분 색깔이 다름 원래 값을 받아오는 것 수정
+  console.log('Logged in as ${client.user.tag}!'); //client.user.tag 부분 색깔이 다름 원래 값을 받아오는 것 수정
 });
 
 client.on('MessageCreate',msg => {
