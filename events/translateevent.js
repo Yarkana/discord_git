@@ -33,7 +33,6 @@ class Papago {
         };
 
 	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
-	console.log(response.data.message.result.translatedText);
         return response.data.message.result.translatedText;
     }
 }
