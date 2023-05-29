@@ -28,3 +28,4 @@ client.con('message',msg => {
     msg.channel.send(embed);
   }
 })
+client.login(process.env.TOKEN)
