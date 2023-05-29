@@ -1,9 +1,9 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageActionRow, MessageButton } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder() // 슬래시 커맨드가 뭘 하는건지 정의해요 (deploy-commands.js와 연동)
-    .setName("대구대 유용한 사이트 모음집")
+    .setName("대구대유용한사이트모음집")
     .setDescription("모음집을 보여줍니다."),
 
   async execute(interaction) {
@@ -13,7 +13,7 @@ module.exports = {
       {
         customId: "대구대 학사공지",
         label: "학사공지로 바로 이동하기",
-        style: "PRIMARY",
+        style: "Primary",  //첫 글자만 대문자
         async action(interaction) {
           await interaction.reply("https://www.daegu.ac.kr/article/DG159/list");
         },
@@ -21,7 +21,7 @@ module.exports = {
       {
         customId: "대구대 비교과시스템",
         label: "비교과시스템으로 바로 이동하기",
-        style: "SECONDARY",
+        style: "Secondary", //1, 2 같은 숫자도 사용가능
         async action(interaction) {
           await interaction.update({
             content: "https://heart.daegu.ac.kr/",
@@ -32,7 +32,7 @@ module.exports = {
       {
         customId: "대구대 lms",
         label: "lms로 바로 이동하기",
-        style: "DANGER",
+        style: "Danger",
         async action(interaction) {
           // 여러분들이 버튼을 클릭했을때, 하고싶은 동작을 코드로 만들면 됩니다
           // 자바스크립트 기능을 여기다 추가하면 여러가지를 만들 수 있어요
@@ -41,10 +41,10 @@ module.exports = {
       },
     ];
 
-    const row = new MessageActionRow().addComponents(
+    const row = new ActionRowBuilder().addComponents(
       // buttons array를 하나씩 읽어서 버튼을 만들게 됩니다
       buttons.map((button) => {
-        return new MessageButton()
+        return new ButtonBuilder()
           .setCustomId(button.customId)
           .setLabel(button.label)
           .setStyle(button.style);
