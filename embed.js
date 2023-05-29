@@ -1,11 +1,11 @@
 const discord = require('discord.js');
 const client = new discord.Client();
 
-client.con('ready',()=> {
+client.once('ready',()=> {
   console.log('Logged in as ${client.user.tag}!'); //client.user.tag 부분 색깔이 다름 원래 값을 받아오는 것 수정
 });
 
-client.con('message',msg => {
+client.on('message',msg => {
   if (msg.content == '야') {
     msg.reply('호!');
   }
