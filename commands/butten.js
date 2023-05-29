@@ -3,40 +3,40 @@ const { MessageActionRow, MessageButton } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder() // 슬래시 커맨드가 뭘 하는건지 정의해요 (deploy-commands.js와 연동)
-    .setName("버튼")
-    .setDescription("버튼을 만듭니다!"),
+    .setName("대구대 유용한 사이트 모음집")
+    .setDescription("모음집을 보여줍니다."),
 
   async execute(interaction) {
     // 슬래시커맨드 행동을 정의해요 (index.js와 연동)
     const buttons = [
       // 각 버튼을 배열(array) 자료구조로 만들어요
       {
-        customId: "test1",
-        label: "첫번째",
+        customId: "대구대 학사공지",
+        label: "학사공지로 바로 이동하기",
         style: "PRIMARY",
         async action(interaction) {
-          await interaction.reply("test1 버튼을 클릭했다.");
+          await interaction.reply("https://www.daegu.ac.kr/article/DG159/list");
         },
       },
       {
-        customId: "test2",
-        label: "두번째",
+        customId: "대구대 비교과시스템",
+        label: "비교과시스템으로 바로 이동하기",
         style: "SECONDARY",
         async action(interaction) {
           await interaction.update({
-            content: "버튼이 클릭됐어!",
+            content: "https://heart.daegu.ac.kr/",
             components: [],
           });
         },
       },
       {
-        customId: "danger",
-        label: "위험",
+        customId: "대구대 lms",
+        label: "lms로 바로 이동하기",
         style: "DANGER",
         async action(interaction) {
           // 여러분들이 버튼을 클릭했을때, 하고싶은 동작을 코드로 만들면 됩니다
           // 자바스크립트 기능을 여기다 추가하면 여러가지를 만들 수 있어요
-          await interaction.reply("위험행!");
+          await interaction.reply("https://lms.daegu.ac.kr/ilos/main/main_form.acl");
         },
       },
     ];
