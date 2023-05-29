@@ -19,6 +19,7 @@ module.exports = {
 		// interaction.member is the GuildMember object, which represents the user in the specific guild - 특정 서버 안에?
 		db.SL = 원어;
 		db.TL = 번역어;
+        interaction.reply("원어를 " + db.SL+ "로, 번역어를 " + db.TL+"로 설정했습니다.");
 		
 	},
 };
