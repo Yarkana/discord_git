@@ -3,6 +3,7 @@ const axios = require('axios');   //npm i axios로 설치할것
 const dotenv = require("dotenv")   //npm i dotenv로 설치할 것
 const qs = require('querystring');  //설치안해도 작동했음. 필요시 설치
 const { EmbedBuilder } = require('discord.js'); 
+const db = require("../db/db")
 
 dotenv.config()
 
@@ -19,8 +20,8 @@ class Papago {
         }
 
 		const params = qs.stringify({
-            source: 'ko',
-            target: 'en',
+            source: db.SL,
+            target: db.TL,
             text: term,
         });
         const papagoConfig = {
