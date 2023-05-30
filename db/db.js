@@ -1,5 +1,5 @@
 module.exports = {
-	setalwaytrans: True,
+	setalwaytrans: true,
 	chenalN1: "",
 	chenalN2: "",
 	chenal1L: "",

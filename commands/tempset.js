@@ -10,15 +10,17 @@ JSON.parse(JSON.stringify(clientName.channels))
 
 module.exports = {
 	data: new SlashCommandBuilder() //이곳에서 명령을 실행함!
-		.setName('채널지정')
-		.setDescription('2개의 채널을 지정해 서로 번역합니다. 아직 작동하지 않습니다.'),
+		.setName('임시상시번역')
+		.setDescription('상시번역활성화'),
 		
 	async execute(interaction) {
-		if (db.setalwaytrans == True){
-			db.setalwaytrans = False
+		if (db.setalwaytrans == true){
+			db.setalwaytrans = false
+			interaction.reply("꺼짐")
 		}
-		if (db.setalwaytrans == False){
-			db.setalwaytrans = True
+		if (db.setalwaytrans == false){
+			db.setalwaytrans = true
+			interaction.reply("켜짐")
 		}
 		
 	},

@@ -1,3 +1,4 @@
+/*
 const { Events } = require('discord.js');
 const db = require("../db/db")
 
@@ -34,7 +35,7 @@ class Papago {
 module.exports = {
 	name: Events.MessageCreate,  //이벤트 종류
 	async execute(message) {     //주내용
-  if (!(message.content.startsWith("?") && db.setalwaytrans == True)) {
+  if ((message.content.startsWith("?") == false) && db.setalwaytrans == true) {
 	KOREANWORD = message.content()
         async function main() {
             const papago = new Papago({
@@ -50,3 +51,4 @@ module.exports = {
 
 },
 }
+*/
