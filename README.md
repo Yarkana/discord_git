@@ -12,6 +12,8 @@
 ## 참고한 오픈소스 
 파파고 번역관련
 https://gist.github.com/c081f171f0227fa9f8a86d590dc30e7f.git
+임베드 관련
+https://github.com/allssu/discord-nodejs-embed.git
 
 ## 참고한 문서
 디스코드의 이벤트들을 모아놓은 문서
