@@ -3,7 +3,7 @@ const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder() // 슬래시 커맨드가 뭘 하는건지 정의해요 (deploy-commands.js와 연동)
-    .setName("번역사이트 모음집")
+    .setName("번역사이트모음집")
     .setDescription("모음집을 보여줍니다."),
 
   async execute(interaction) {
