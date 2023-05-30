@@ -40,7 +40,6 @@ module.exports = {
         },
       },
     ];
-
     const row = new ActionRowBuilder().addComponents(
       // buttons array를 하나씩 읽어서 버튼을 만들게 됩니다
       buttons.map((button) => {
