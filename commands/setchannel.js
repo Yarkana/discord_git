@@ -11,7 +11,7 @@ JSON.parse(JSON.stringify(clientName.channels))
 module.exports = {
 	data: new SlashCommandBuilder() //이곳에서 명령을 실행함!
 		.setName('채널지정')
-		.setDescription('2개의 채널에서 서로 번역합니다.')
+		.setDescription('2개의 채널을 지정해 서로 번역합니다. 아직 작동하지 않습니다.')
 		.addStringOption(option =>
 			option.setName('채널1')
 				.setDescription('채널1')
@@ -44,8 +44,7 @@ module.exports = {
 			)),
 		
 	async execute(interaction) {
-		// interaction.user is the object representing the User who ran the command - 누가 썻는지 알려줍니다
-		// interaction.member is the GuildMember object, which represents the user in the specific guild - 특정 서버 안에?
+		// 채널 ID를 구할 방법이 필요함
 
 		const C1 = interaction.options.getString('채널1id');
 		const C2 = interaction.options.getString('채널2id');
