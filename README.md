@@ -12,6 +12,7 @@
 ## 참고한 오픈소스 
 파파고 번역관련
 https://gist.github.com/c081f171f0227fa9f8a86d590dc30e7f.git
+
 임베드 관련
 https://github.com/allssu/discord-nodejs-embed.git
 
