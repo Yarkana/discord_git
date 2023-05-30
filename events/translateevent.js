@@ -37,45 +37,13 @@ class Papago {
     }
 }
 
-//영어 파파고 시작
-class JapanesPapago {
-    constructor(papagoConfig) {
-        this.papagoConfig = papagoConfig;
-    }
-
-    async lookup(term, { method }) {
-        if (this.papagoConfig == null) {
-            throw new Error('Papago instance should be initialized with config first');
-        } if (term == null) {
-            throw new Error('Search term should be provided as lookup arguments');
-        }
-
-		const params = qs.stringify({
-            source: 'en',
-            target: 'ko',
-            text: term,
-        });
-        const papagoConfig = {
-            headers: {
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-                'X-Naver-Client-Id':this.papagoConfig.NAVER_CLIENT_ID,
-                'X-Naver-Client-Secret':this.papagoConfig.NAVER_CLIENT_SECRET,
-            },
-        };
-
-	const response = await axios.post('https://openapi.naver.com/v1/papago/n2mt', params, papagoConfig);
-	
-        return response.data.message.result.translatedText;
-    }
-}
-
 module.exports = {
 	name: Events.MessageCreate,  //이벤트 종류
 	async execute(message) {
 		if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
         ENWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
         async function main() {
-            const papago = new JapanesPapago({
+            const papago = new Papago({
                 NAVER_CLIENT_ID: process.env.client_id,            //env파일은 비주얼 스투디오 코드로 생성해서 변수이름 = 토큰 식으로 작성함
                 NAVER_CLIENT_SECRET: process.env.client_secret,    //예시 : ID = EEEE
             })
@@ -88,6 +56,7 @@ module.exports = {
         }
         main()
        }
+       
     if (message.content.startsWith("!파파고")) {                 //startWith 즉 이 문장으로 시작하는가 라는 조건임
         KOREANWORD = message.content.replace("!파파고", "")
         async function main() {
@@ -105,13 +74,6 @@ module.exports = {
         
         main()
     }
-    if (message.content.startsWith("!타겟언어")) {
-        LSET = message.content.replace("!타겟언어", "") //1번째인수에 지정된 단어를 넘겨주면 2번째인수의 단어로 교체함 즉 명령어를 제거함
-        async function main() {
-			langset.targetL = LSET
-	}
-	main()	
-	
-	}
+
 },
 }
