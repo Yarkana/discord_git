@@ -40,6 +40,7 @@ class Papago {
 module.exports = {
 	name: Events.MessageCreate,  //이벤트 종류
 	async execute(message) {
+		if (message.author.bot) return;
 		if (message.content.startsWith("!papa")) {                   // message.content 에는 채팅내용이 들어있음
         ENWORD = message.content.replace("!papa", "");      // 따라서 message.content == "x" 같은 식으로 조건비교가 가능함
         async function main() {
