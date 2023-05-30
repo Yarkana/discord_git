@@ -8,11 +8,25 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('원어')
 				.setDescription('번역할 원어')
-				.setRequired(true))
+				.setRequired(true)
+				.addChoices(
+				{ name: '한국어', value: 'ko' },
+				{ name: 'English-영어', value: 'en' },
+				{ name: '日本語-일본어', value: 'ja' },
+				{ name: '简体中文-중국어간체', value: 'zh-CN' },
+				{ name: '繁體中文-중국어번체', value: 'zh-TW' },
+			))
 		.addStringOption(option =>
 			option.setName('번역어')
 				.setDescription('번역할 언어')
-				.setRequired(true)),
+				.setRequired(true)
+				.addChoices(
+				{ name: '한국어', value: 'ko' },
+				{ name: 'English-영어', value: 'en' },
+				{ name: '日本語-일본어', value: 'ja' },
+				{ name: '简体中文-중국어간체', value: 'zh-CN' },
+				{ name: '繁體中文-중국어번체', value: 'zh-TW' },
+			)),
 		
 	async execute(interaction) {
 		// interaction.user is the object representing the User who ran the command - 누가 썻는지 알려줍니다
