@@ -6,7 +6,6 @@ module.exports = {
 	async execute(message) {     //주내용
   if (message.content == "프로필") {
     const embed = new EmbedBuilder() // 임배드 디스코드 대답
-        //.setAuthor("변역 봇","https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.daegu.ac.kr%2Farticle%2FDG56%2Fdetail%2F516278&psig=AOvVaw1z490kWF08uWED777u4er1&ust=1685287867967000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOCG8tjolf8CFQAAAAAdAAAAABAE")
     	.setTitle("번역 봇 프로필") // Author은 제목, 이미지 주소 Title은 큰 제목격 
     	.setURL("https://discord.com/api/oauth2/authorize?client_id=1109755131639103508&permissions=8&scope=bot") // url 주소 클릭하면 이동됨
     	.setColor(0xABF200) //색깔 선정
